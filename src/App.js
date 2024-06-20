@@ -1,24 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import { createBrowserRouter, RouterProvider, Link } from "react-router-dom";
+import { Button, CssBaseline, ThemeProvider, createTheme } from "@mui/material";
+import React from "react";
+import Signin from "./pages/auth/Signin";
+import Signup from "./pages/auth/Signup";
 
 function App() {
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#8D24DE",
+      },
+      mode: "dark",
+      background: {
+        paper: "#181818",
+        default: "#222323",
+      },
+      secondary: {
+        main: "#212121",
+      },
+    },
+  });
+
+  const router = createBrowserRouter([
+    {
+      path: "/auth/signin",
+      element: <Signin />,
+    },
+    {
+      path: "/auth/signup",
+      element: <Signup />,
+    },
+    {
+      path: "about",
+      element: <div>About</div>,
+    },
+  ]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <RouterProvider router={router}></RouterProvider>
+    </ThemeProvider>
   );
 }
 

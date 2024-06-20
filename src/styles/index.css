@@ -1,0 +1,75 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.auth-background {
+  background: #485563; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #29323c,
+    #485563
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #29323c,
+    #485563
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.sign-glass {
+  background: rgba(0, 0, 0, 0.49);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  /* border: 1px solid rgba(255, 255, 255, 0.3); */
+}
+
+.anchor-tag {
+  text-decoration: none;
+  color: #3e89d6;
+  cursor: pointer;
+}
+
+.anchor-tag:hover {
+  text-decoration: none;
+  color: #3e8ad6bd;
+  cursor: pointer;
+}
+
+.anchor-tag:visited {
+  text-decoration: none;
+  color: #0e81f4;
+  cursor: pointer;
+}
+
+.min-h-100 {
+  min-height: 100vh;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-items-center {
+  align-items: center;
+}
+
+.flex-justify-center {
+  justify-content: center;
+}
+
+.flex-all-center {
+  align-items: center;
+  justify-content: center;
+}

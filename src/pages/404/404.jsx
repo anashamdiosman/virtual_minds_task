@@ -4,9 +4,14 @@ import { Link } from "react-router-dom";
 
 const ErrorComponent = () => {
   return (
-    <Box className="flex flex-all-center min-h-100" sx={{ width: "100%" }}>
+    <Box
+      className="flex flex-all-center min-h-100"
+      sx={{ width: "100%", flexDirection: "column", gap: "10px" }}
+    >
       <Typography>404 Page not found</Typography>
-      <Link to={"/"}>Go Back Home</Link>
+      <Box>
+        <Link to={"/"}>Go Back Home</Link>
+      </Box>
     </Box>
   );
 };

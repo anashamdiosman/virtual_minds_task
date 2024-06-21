@@ -1,4 +1,15 @@
-# Getting Started with Create React App
+# Installation instructions
+
+Node version user 20.13.1
+NPM version used 10.5.2
+
+First make sure the server is running on port 8000
+
+After that Run npm install or npm install --legacy-peer-deps if you have any issues with dependencies
+
+After the installation is complete run: npm run start
+
+Now you are good to go
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

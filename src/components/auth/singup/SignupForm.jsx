@@ -41,6 +41,7 @@ const SignupForm = () => {
         setAuth({ user: data?.user, accessToken });
         navigate("/", { replace: true });
       } catch (error) {
+        alert("User exists");
         console.log(error);
       }
     },

@@ -11,12 +11,16 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SignGlass from "../SignGlass";
 import { useFormik } from "formik";
 import { signupSchema } from "../../../validation/signupSchema";
+import useAuth from "../../../hooks/useAuth";
+import { instance } from "../../../utils/AxiosInstance";
 
 const SignupForm = () => {
+  const { setAuth } = useAuth();
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       first_name: "",
@@ -26,8 +30,19 @@ const SignupForm = () => {
       password: "",
       confirm_password: "",
     },
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      try {
+        const { data } = await instance.post("/user/signup", values, {
+          withCredentials: true,
+        });
+
+        const accessToken = data?.user?.token;
+
+        setAuth({ user: data?.user, accessToken });
+        navigate("/", { replace: true });
+      } catch (error) {
+        console.log(error);
+      }
     },
     validationSchema: signupSchema,
   });

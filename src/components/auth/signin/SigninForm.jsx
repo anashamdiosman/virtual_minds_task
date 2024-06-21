@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
@@ -14,14 +14,61 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import SignGlass from "../SignGlass";
+import { instance as axios } from "../../../utils/AxiosInstance";
+import useAuth from "../../../hooks/useAuth";
 
 const SigninForm = () => {
+  const { setAuth } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
   const [viewPass, setViewPass] = useState(false);
-  const handleSignIn = (e) => {
+
+  const from = location.state?.from?.pathname || "/";
+
+  const handleSignIn = async (e) => {
     e.preventDefault();
-    console.log({ username, password });
+
+    try {
+      const { data } = await axios.post(
+        "/user/signin",
+        { username, password },
+        {
+          withCredentials: true,
+        }
+      );
+
+      const accessToken = data?.user?.token;
+
+      setAuth({ user: data?.user, accessToken });
+      navigate(from, { replace: true });
+    } catch (error) {
+      alert("Wrong username or password");
+      console.log(error);
+    }
+  };
+
+  const handleSignOut = async (e) => {
+    e.preventDefault();
+
+    try {
+      const { data } = await axios.post(
+        "/user/logout",
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+
+      // const accessToken = data?.user?.token;
+
+      setAuth({});
+      // navigate(from, { replace: true });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const toggleViewPass = () => {
@@ -84,6 +131,7 @@ const SigninForm = () => {
             Login
           </Button>
         </Box>
+
         <Box mt={4} px={0.5}>
           <Typography>
             Don't have an account yet?{" "}

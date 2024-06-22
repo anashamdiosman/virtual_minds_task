@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider, Link } from "react-router-dom";
 import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import Signin from "./pages/auth/Signin";
 import Signup from "./pages/auth/Signup";
 import RequireAuth from "./components/general/RequireAuth";
@@ -9,8 +9,12 @@ import Home from "./pages/home/Home";
 import EditCustomer from "./pages/customers/Customer";
 import Customers from "./pages/customers/Costumers";
 import Profile from "./pages/profile/Profile";
+import useRefreshToken from "./hooks/useRefreshToken";
+import useAuth from "./hooks/useAuth";
 
 function App() {
+  const { auth, setAuth } = useAuth();
+  const refresh = useRefreshToken();
   const ROLES = {
     user: "user",
     admin: "admin",

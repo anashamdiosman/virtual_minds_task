@@ -13,10 +13,12 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import LayoutContainer from "../../components/general/LayoutContainer";
 import { useNavigate } from "react-router-dom";
-import { privateInstance } from "../../utils/AxiosInstance";
+// import { privateInstance } from "../../utils/AxiosInstance";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 const Customers = () => {
   const navigate = useNavigate();
+  const axiosPrivate = useAxiosPrivate();
 
   const [customers, setCustomers] = useState([]);
 
@@ -31,7 +33,7 @@ const Customers = () => {
 
   const fetchCustomers = async () => {
     try {
-      const { data } = await privateInstance.post("/user/fetch-all", {});
+      const { data } = await axiosPrivate.post("/user/fetch-all", {});
 
       setCustomers(data?.user);
     } catch (error) {

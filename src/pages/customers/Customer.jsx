@@ -15,20 +15,22 @@ import LayoutContainer from "../../components/general/LayoutContainer";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
-import { privateInstance } from "../../utils/AxiosInstance";
 import { useParams } from "react-router-dom";
 import moment from "moment";
 import Loader from "../../components/loader/Loader";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 const roles = ["admin", "superadmin", "user"];
 
 const EditCustomer = () => {
+  const axiosPrivate = useAxiosPrivate();
+
   const [customer, setCustomer] = useState(null);
   const { uuid } = useParams();
 
   const fetchCustomer = async () => {
     try {
-      const { data } = await privateInstance.post("/user/fetch", { uuid });
+      const { data } = await axiosPrivate.post("/user/fetch", { uuid });
 
       setCustomer(data?.user);
     } catch (error) {
@@ -42,7 +44,7 @@ const EditCustomer = () => {
         "Are you sure you want to delete this customer?"
       );
       if (!confirm) return;
-      const data = await privateInstance.delete("/user/admin", {
+      const data = await axiosPrivate.delete("/user/admin", {
         data: { uuid },
       });
       alert("Delete success");
@@ -74,7 +76,8 @@ const EditCustomer = () => {
           }}
           onSubmit={async (values) => {
             try {
-              const data = await privateInstance.put("/user/admin", {
+              console.log(values);
+              const data = await axiosPrivate.put("/user/admin", {
                 ...values,
                 uuid,
               });

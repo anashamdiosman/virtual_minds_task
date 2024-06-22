@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
-import { instance as axios } from "../utils/AxiosInstance";
 import Loader from "../components/loader/Loader";
+
+import { instance as axios } from "../utils/AxiosInstance";
 
 const AuthContext = createContext({});
 
@@ -9,30 +10,30 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const refreshAccessToken = async () => {
+    const refresh = async () => {
       try {
-        setLoading(true);
-        const { data } = await axios.post(
+        const response = await axios.post(
           "/user/token",
           {},
           {
             withCredentials: true,
           }
         );
-
+        // console.log(response);
+        setAuth((prev) => {
+          return {
+            user: response?.data?.user,
+            accessToken: response?.data?.user?.token,
+          };
+        });
         setLoading(false);
-
-        const accessToken = data?.user?.token;
-
-        setAuth({ user: data?.user, accessToken });
       } catch (error) {
+        setAuth({});
         setLoading(false);
-
-        console.error("Error refreshing access token:", error);
       }
     };
 
-    refreshAccessToken();
+    refresh();
   }, []);
 
   return (

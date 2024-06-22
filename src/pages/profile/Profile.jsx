@@ -13,10 +13,11 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import useAuth from "../../hooks/useAuth";
-import { privateInstance } from "../../utils/AxiosInstance";
 import moment from "moment";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 const Profile = () => {
+  const axiosPrivate = useAxiosPrivate();
   const { auth, setAuth } = useAuth();
 
   const handleDelete = async () => {
@@ -25,7 +26,7 @@ const Profile = () => {
         "Are you sure you want to delete your account?"
       );
       if (!confirm) return;
-      const data = await privateInstance.delete("/user/my-account", {});
+      const data = await axiosPrivate.delete("/user/my-account", {});
 
       setAuth({});
       alert("Delete success");
@@ -51,7 +52,7 @@ const Profile = () => {
         onSubmit={async (values) => {
           // Handle form submission
           try {
-            const data = await privateInstance.put("/user/my-account", values);
+            const data = await axiosPrivate.put("/user/my-account", values);
             alert("Update success");
           } catch (error) {
             alert("Failed update");
